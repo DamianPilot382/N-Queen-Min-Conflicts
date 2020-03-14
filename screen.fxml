@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="901.0" prefWidth="1123.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <VBox alignment="TOP_RIGHT" layoutX="14.0" layoutY="14.0">
+         <children>
+            <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label text="Project 2: N-Queen">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Written by: Damian Ugalde" />
+                  <Label text="CS 4200 - Artificial Intelligence" />
+                  <Label text="Cal Poly Pomona" />
+                  <Label text="Instructor: Dominick A. Atanasio" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="87.0">
+               <children>
+                  <Label text="Solve:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button fx:id="minConflictAlgBtn" mnemonicParsing="false" text="Min Conflict" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Time for Solution (ms): ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="timeLbl" text="0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER">
+                     <children>
+                        <Label text="Attacking Queens: ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="attackingLbl" text="0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
+      <Pane fx:id="boardPane" layoutX="238.0" layoutY="14.0" prefHeight="354.0" prefWidth="289.0" />
+   </children>
+</AnchorPane>

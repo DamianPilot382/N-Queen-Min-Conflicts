@@ -6,7 +6,7 @@ public class MinConflict {
 
     public Board board;
     private HashMap<Integer, HashSet<Integer>> conflictMap;
-    private HashSet<Integer> conflicts;
+    private boolean[] conflicts;
     private int maxSteps;
     private final int n;
     
@@ -17,7 +17,20 @@ public class MinConflict {
         this.board = new Board(n);
         this.conflictMap = new HashMap<>(n, 1);
         this.maxSteps = maxSteps;
-        this.conflicts = new HashSet<>(n);
+        this.conflicts = new boolean[n];
+
+        this.fillConflictsMap();
+        this.checkAllConflicts();
+    }
+
+    public MinConflict(Board board, int maxSteps){
+
+        this.board = board;
+
+        this.n = board.getSize();
+        this.conflictMap = new HashMap<>(n, 1);
+        this.maxSteps = maxSteps;
+        this.conflicts = new boolean[n];
 
         this.fillConflictsMap();
         this.checkAllConflicts();
@@ -36,8 +49,8 @@ public class MinConflict {
                 if(a == b || (j - i) == Math.abs(b - a)){
                     conflictMap.get(i).add(j);
                     conflictMap.get(j).add(i);
-                    conflicts.add(i);
-                    conflicts.add(j);
+                    conflicts[i] = true;
+                    conflicts[j] = true;
                 }
             }
         }
@@ -47,7 +60,7 @@ public class MinConflict {
         Board current = this.board;
         int steps = maxSteps;
 
-        while(--steps > 0){
+        while(steps-- > 0){
             if(current.getAttackingValue() == 0)
                 return current;
             minimizeConflict();
@@ -57,6 +70,7 @@ public class MinConflict {
 
     private void minimizeConflict(){
         int randCol = this.getRandomConflict();
+        //System.out.println("Rand Col: " + randCol);
         HashSet<Integer> best = null;
         int bestRow = -1;
         HashSet<Integer> next = null;
@@ -66,17 +80,42 @@ public class MinConflict {
             if(best == null || best.size() > next.size()){
                 best = next;
                 bestRow = i;
+            }else if(best.size() == next.size()){
+                if(Math.random() > .5){
+                    best = next;
+                    bestRow = i;
+                }
             }
 
         }
 
-        this.updateConflicts(randCol, next);
+        //printSet(best);
+
+        this.updateConflicts(randCol, best);
         this.board.getData()[randCol] = bestRow;
+
+        //System.out.println(this.board);
+        //System.out.println(this);
 
     }
 
+    private void printSet(HashSet<Integer> set){
+        Iterator iter = set.iterator();
+
+        while(iter.hasNext()){
+            int next = (Integer) iter.next();
+
+            System.out.println(next + " ");
+        }
+        System.out.println();
+    }
+
     private int getRandomConflict(){
-        return (int)(Math.random() * n);
+        int index = -1;
+        do{
+            index = (int)(Math.random() * n);
+        }while(this.conflicts[index] != true);
+        return index;
     }
 
     private HashSet<Integer> checkConflict(int index, int newValue){
@@ -102,6 +141,8 @@ public class MinConflict {
             int next = iter.next();
             if(next != index)
             conflictMap.get(next).remove(index);
+            if(conflictMap.get(next).isEmpty())
+                conflicts[next] = false;
         }
 
         iter = conf.iterator();
@@ -109,6 +150,7 @@ public class MinConflict {
         while(iter.hasNext()){
             int next = iter.next();
             conflictMap.get(next).add(index);
+            conflicts[next] = true;
         }
 
         conflictMap.put(index, conf);

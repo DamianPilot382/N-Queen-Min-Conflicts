@@ -11,7 +11,7 @@
          <children>
             <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
                <children>
-                  <Label text="Project 2: N-Queen">
+                  <Label text="Project 3: N-Queen">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

@@ -11,7 +11,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         Parent root = FXMLLoader.load(getClass().getResource("screen.fxml"));
-        primaryStage.setTitle("CS 4200 - Project 2");
+        primaryStage.setTitle("CS 4200 - Project 3");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
 

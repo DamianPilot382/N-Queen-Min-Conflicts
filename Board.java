@@ -1,6 +1,6 @@
 /**
  * @author Damian Ugalde
- * @date 2020-03-08
+ * @date 2020-03-15
  * @version 1.0
  *
  * Project 3
@@ -11,9 +11,6 @@
  * Instructor: Dominick A. Atanasio
  *
  */
-import java.util.ArrayList;
-import java.util.Collections;
-
 public class Board implements Comparable<Board> {
 
     //Each index in this array holds the col, while the int stored holds the row for the queen.
@@ -41,23 +38,11 @@ public class Board implements Comparable<Board> {
      */
     private void randomBoard(int size){
 
-        //Create a new array
         this.data = new int[size];
 
-        //Create a new arraylist, and add all the elements from 0 to size to it.
-        //Since each queen has to be in a unique row and column, this guarantees that no
-        //queen will be in the same row.
-        ArrayList<Integer> temp = new ArrayList<>(size);
-        for(int i = 0; i < size; i++){
-            temp.add(i);
-        }
-
-        //Shuffle the arraylist
-        Collections.shuffle(temp);
-
-        //Copy the shuffled arraylist to the array
-        for(int i = 0; i < this.data.length; i++){
-            this.data[i] = temp.get(i);
+        //Fill each spot in the array with a number from 0 to size-1.
+        for(int i = 0; i < data.length; i++){
+            data[i] = (int)(Math.random() * size);
         }
 
     }
@@ -67,7 +52,7 @@ public class Board implements Comparable<Board> {
      * This does not count duplicates. Given a queen 'a' and a queen 'b',
      * 'a' will be attacking 'b' while 'b' is also attacking 'a'.
      * This method only counts that as one attack.
-     * @return Queens in attack mode.
+     * @return Count of queens in attack mode.
      */
     public int getAttackingValue(){
 
@@ -107,22 +92,20 @@ public class Board implements Comparable<Board> {
      */
     public Board getRandomSuccessor(){
 
-        //Get a first random col
-        int col1 = (int)(Math.random() * this.data.length);
+        //Get a random column and row
+        int randCol = (int)(Math.random() * this.data.length);
+        int randRow = -1;
 
-        //Get a second random col, while making sure that it's different than col1.
-        int col2 = 0;
+        //Make sure the next row is not the one assigned now.
         do{
-            col2 = (int)(Math.random() * this.data.length);
-        }while(col1 == col2);
+            randRow = (int)(Math.random() * this.data.length);
+        }while(randRow == this.data[randCol]);
 
         //Clone the data into a new array for the new board.
         int[] arr = this.data.clone();
 
-        //Swap the two column values.
-        int temp = arr[col1];
-        arr[col1] = arr[col2];
-        arr[col2] = temp;
+        //Change the value
+        arr[randCol] = randRow;
 
         //Make a new board with the new data and return it.
         return new Board(arr);
